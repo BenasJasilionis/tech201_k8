@@ -18,5 +18,14 @@ spec:
         image: benasj/app:v3
         ports:
         - containerPort: 3000
+        env:
+        - name: DB_HOST
+          value: mongodb://mongo:27017/posts
+        lifecycle:
+          postStart:
+            exec:
+              command: ["node", "seeds/seed.js"]
+        
+    
       
           

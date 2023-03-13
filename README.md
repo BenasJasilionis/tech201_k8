@@ -281,8 +281,8 @@ kubectl create -f node-service.yml
 6) `kubectl delete service name` (the name specifiec in the creation script) -> Delete a specified service mircroservice
 7) `kubectl delete deploy name` (the name specified in the creation script) -> Delete a specified deployment microservice
 8) `kubectl get pods` -> Shows all running pods
-9) `kubectl edit deploy deploy.yml` -> Allows you to edit a deployment script without downtime
-10) `kubectl edit service service.yml` -> Allows you to edit a service script without downtime
+9) `kubectl edit deploy deploy` (the name specified in the creation script) -> Allows you to edit a deployment script without downtime
+10) `kubectl edit service service` (the name specified in the creation script) -> Allows you to edit a service script without downtime
 
 
 
