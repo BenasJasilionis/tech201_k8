@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1 # Which api to use for deployment
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  selector:
+    matchLabels:
+      app: node-app
+  replicas: 3
+  template:
+    metadata:
+      labels: 
+        app: node-app
+    spec:
+      containers:
+      - name: node-app
+        image: benasj/app:v3
+        ports:
+        - containerPort: 3000
+      
+          

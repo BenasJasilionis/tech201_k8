@@ -30,7 +30,12 @@ Kubernetes objects are persistent entities in the Kubernetes system. Kubernetes 
 * `Kubernetes node` -> A worker machine that runs Kubernetes workloads. Can be physical or virtual
 * `Kubernetes workload` -> An application running on Kubernetes. Workloads are run inside `pods`
 * `Kubernetes pod` -> A set of running containers in a cluster
+* `Image registry` -> Where container images are kept. Transferred to nodes by `control planes` for execution within pods.
 * Overal structure, from the inside out -> Workload -> Container -> Pod -> Node -> Cluster
+## Kubernetes architecture -> Control plane
+A `kubernetes control plane` is used to control a `kubernetes cluster`. Below are the componenets:
+* `kube-apiserver` -> Exposes the `kubernetes api`. External communications from command line interface passthrough the `kube-apiserve`. All control plane to node communication passes through `kube-apiserver`.
+* 
 
 ![](images/cluster.png)
 
@@ -136,3 +141,148 @@ Use "kubectl options" for a list of global command-line options (applies to all 
 * Make sure docker and K8 is running
 * Enable kubernetes
 * Apply and restart
+* `kubectl` key word to use kubernetes command line
+* `kubectl get service` -> shows what services are running on kubernetes
+* `kubectl get svc` -> does the same thing as service
+* `kubectl create -f filename.yml` -> run a script and create a deployment based of the script
+* `f` flag specifies to look for a file, the name of which you specify next where it says `filename.yml`
+* `kubectl get deploy` -> show deployment
+* `kubectl get pods` -> shows running pods
+* `kubectl get all` -> show everything running in a cluster
+* `kubectl edit deploy deployment-name` -> edit a deployment without shutting it down -> no down time for customers
+## Troubleshooting
+* `kubectl describe pod
+## Creating a kubernetes deployment for custom nginx image
+1) Create a `nginx-deploy.yml` file
+2) Inside the file, enter the following:
+```
+apiVersion: apps/v1 # Which api to use for deployment
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 3
+  template:
+    metadata:
+      labels: 
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: benasj/tech201-nginx
+        ports:
+        - containerPort: 80
+```
+* Under `image`, use your own nginx image
+3) Build the deployment:
+```
+kubectl create -f nginx-deployment.yml
+```
+## Creating an nginx service to make it accessable on the browser
+
+![](images/kubernetes_cluster.png)
+
+1) Create a `nginx-service.yml` file
+2) Inside the file, enter the following:
+```
+apiVersion: v1 # Select the type of API version and type of service/object
+kind: Service
+metadata:
+  name: nginx-svc
+  namespace: default
+
+spec: 
+  ports:
+  - nodePort: 30001 #range is 30000-32768
+    port: 80
+
+    targetPort: 80
+
+  selector:
+    app: nginx # this label connects this service to deployment
+
+  type: NodePort # also use LoadBalancer - for local use cluster IP
+```
+3) Build the service:
+```
+kubectl create -f nginx-service.yml
+```
+* Your edited nginx page should now be visible on the browser on port 30001: `localhost:30001`
+
+![](images/kubernetes_nginx.png)
+
+## Creating a kubernetes deployment for the Sparta app
+1) Create a `node-deploy.yml` file
+2) Inside the file, enter the following:
+```
+apiVersion: apps/v1 # Which api to use for deployment
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  selector:
+    matchLabels:
+      app: node-app
+  replicas: 3
+  template:
+    metadata:
+      labels: 
+        app: node-app
+    spec:
+      containers:
+      - name: node-app
+        image: benasj/app:v3
+        ports:
+        - containerPort: 3000
+```
+3) Build the deployment:
+```
+kubectl create -f node-deploy.yml
+```
+## Create a service to make Sparta app accessible on the browser
+1) Create a `node-service.yml` file
+2) Inside the file, enter the following:
+```
+apiVersion: v1 # Select the type of API version and type of service/object
+kind: Service
+metadata:
+  name: app-svc
+  namespace: default
+
+spec: 
+  ports:
+  - nodePort: 30002 #range is 30000-32768
+    port: 3000
+
+    targetPort: 3000
+
+  selector:
+    app: node-app # this label connects this service to deployment
+
+  type: NodePort # also use LoadBalancer - for local use cluster IP
+```
+3) Build the service:
+```
+kubectl create -f node-service.yml
+```
+* The app should now be visible in your browser on: `localhost:30002`:
+
+![](images/kubernetes_app.png)
+
+## Useful commands
+1) `kubectl create -f filename.yml` -> Creates a microservice according to the specified script
+2) `kubectl get deploy` -> Shows all running microservices of `deployment` type
+3) `kubectl get services` -> Shows all running microservices of `services` type
+4) `kubectl get pods` -> Shows all running pods
+5) `kubectl get all` -> Shows everything thats running in the cluster
+6) `kubectl delete service name` (the name specifiec in the creation script) -> Delete a specified service mircroservice
+7) `kubectl delete deploy name` (the name specified in the creation script) -> Delete a specified deployment microservice
+8) `kubectl get pods` -> Shows all running pods
+9) `kubectl edit deploy deploy.yml` -> Allows you to edit a deployment script without downtime
+10) `kubectl edit service service.yml` -> Allows you to edit a service script without downtime
+
+
+
