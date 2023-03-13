@@ -24,8 +24,16 @@ Kubernetes objects are persistent entities in the Kubernetes system. Kubernetes 
 * A Kubernetes object is a "record of intent"--once you create the object, the Kubernetes system will constantly work to ensure that object exists
 * By creating an object, you're effectively telling the Kubernetes system what you want your cluster's workload to look like; this is your cluster's desired state
 * Objects are created, modified and deleted using `Kubernetes APIs`
-## Kubernetes architecture
-* `Kubernetes cluster` -> A set of nodes that run 
+## Kubernetes architecture -> Clusters
+* `Kubernetes cluster` -> A set of nodes that run containerized applications
+* Kubernetes clusters have master nodes/control panels and worker nodes
+* `Kubernetes node` -> A worker machine that runs Kubernetes workloads. Can be physical or virtual
+* `Kubernetes workload` -> An application running on Kubernetes. Workloads are run inside `pods`
+* `Kubernetes pod` -> A set of running containers in a cluster
+* Overal structure, from the inside out -> Workload -> Container -> Pod -> Node -> Cluster
+
+![](images/cluster.png)
+
 ## Setting up a K8 cluster on docker desktop
 1) Open docker desktop
 2) Click on the cogwheel in the top right
