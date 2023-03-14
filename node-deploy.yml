@@ -25,6 +25,7 @@ spec:
           postStart:
             exec:
               command: ["node", "seeds/seed.js"]
+
         
     
       

@@ -281,8 +281,13 @@ kubectl create -f node-service.yml
 6) `kubectl delete service name` (the name specifiec in the creation script) -> Delete a specified service mircroservice
 7) `kubectl delete deploy name` (the name specified in the creation script) -> Delete a specified deployment microservice
 8) `kubectl get pods` -> Shows all running pods
-9) `kubectl edit deploy deploy` (the name specified in the creation script) -> Allows you to edit a deployment script without downtime
-10) `kubectl edit service service` (the name specified in the creation script) -> Allows you to edit a service script without downtime
+9) `kubectl edit deploy name` (the name specified in the creation script) -> Allows you to edit a deployment script without downtime
+10) `kubectl edit service name` (the name specified in the creation script) -> Allows you to edit a service script without downtime
+11) `kubectl describe deploy name`
+## Yml
+* Can have several scripts in one yml file, separate them by: `---`
+
+![](images/kubernetes_app_db.png)
 
 
 
