@@ -289,5 +289,18 @@ kubectl create -f node-service.yml
 
 ![](images/kubernetes_app_db.png)
 
+## K8 cluster migration to cloud
+### Plan
+1) Research how to migrate a K8 cluster to AWS EC2
+2) Research what EC2 specifications are needed to run the cluster, e.g. t2 medium
+3) Find what commands are needed to install docker
+4) Find what commands are needed to install kubernetes
+5) Make the EC2 instance, with the appropriate security group rules
+6) Install docker on the instance
+7) Install Kubernetes on the instance
+8) Create the cluster
+9) Make it accessible on the browser
+
+
 
 
